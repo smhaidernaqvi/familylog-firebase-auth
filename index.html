@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FamilyLog – Sign In</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4285F4, #34A853);
+        }
+
+        .container {
+            width: 380px;
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .2);
+            text-align: center;
+            animation: fadeUp .8s ease;
+            overflow: hidden;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Smooth panel switching ── */
+        .panel {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .panel.hidden {
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* ── Login panel ── */
+        #loginPanel h1 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        #loginPanel p {
+            color: #666;
+            margin-bottom: 28px;
+        }
+
+        .google-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: #fff;
+            cursor: pointer;
+            transition: .3s;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .google-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+        }
+
+        .google-icon {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* ── Loader ── */
+        #loaderPanel {
+            padding: 30px 0;
+        }
+
+        .loader {
+            margin: 0 auto;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 4px solid #f0f0f0;
+            border-top-color: #EA4335;
+            border-right-color: #4285F4;
+            border-bottom-color: #34A853;
+            border-left-color: #FBBC05;
+            animation: gSpin 1.2s ease-in-out infinite;
+        }
+
+        @keyframes gSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loaderPanel p {
+            margin-top: 16px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* ── User info panel ── */
+        #userPanel img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+        }
+
+        #userPanel h2 {
+            color: #222;
+            margin-bottom: 4px;
+        }
+
+        #userPanel p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .signout-btn {
+            padding: 11px 28px;
+            border: none;
+            border-radius: 10px;
+            background: #f5f5f5;
+            color: #555;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .signout-btn:hover {
+            background: #fee;
+            color: #e53935;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- LOGIN PANEL -->
+        <div id="loginPanel" class="panel">
+            <h1>Welcome Back</h1>
+            <p>Sign in to continue</p>
+
+            <button class="google-btn" id="googleBtn">
+                <svg class="google-icon" viewBox="0 0 48 48">
+                    <path fill="#EA4335"
+                        d="M24 9.5c3.54 0 6.69 1.22 9.19 3.61l6.85-6.85C35.91 2.38 30.41 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.54 17.73 9.5 24 9.5z" />
+                    <path fill="#4285F4"
+                        d="M46.5 24.5c0-1.64-.15-3.21-.42-4.72H24v8.95h12.65c-.54 2.91-2.18 5.37-4.64 7.02l7.18 5.58C43.86 37.18 46.5 31.38 46.5 24.5z" />
+                    <path fill="#FBBC05"
+                        d="M10.54 28.59A14.49 14.49 0 0 1 9.5 24c0-1.6.28-3.15.78-4.59l-7.98-6.19A23.93 23.93 0 0 0 0 24c0 3.84.92 7.48 2.56 10.78l7.98-6.19z" />
+                    <path fill="#34A853"
+                        d="M24 48c6.48 0 11.91-2.13 15.88-5.81l-7.18-5.58c-2 1.35-4.56 2.14-8.7 2.14-6.27 0-11.57-4.04-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                </svg>
+                Continue with Google
+            </button>
+        </div>
+
+        <!-- LOADER PANEL -->
+        <div id="loaderPanel" class="panel hidden">
+            <div class="loader"></div>
+            <p>Signing you in…</p>
+        </div>
+
+        <div id="loaderPanel-out" class="panel hidden">
+            <div class="loader"></div>
+            <p>Signing you out…</p>
+        </div>
+
+        <!-- USER PANEL -->
+        <div id="userPanel" class="panel hidden">
+            <img id="userPhoto" src="" alt="Profile">
+            <h2 id="userName"></h2>
+            <p id="userEmail"></p>
+            <button class="signout-btn" id="signOutBtn">Sign Out</button>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyByCKKcN1C3BD8xHdqItqFfvO56OETiQWU",
+            authDomain: "familylog-dev.firebaseapp.com",
+            projectId: "familylog-dev",
+            storageBucket: "familylog-dev.firebasestorage.app",
+            messagingSenderId: "745003941534",
+            appId: "1:745003941534:web:b0ed39583234b77bca458f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // ── Panel switcher ──
+        function showPanel(id) {
+            ["loginPanel", "loaderPanel", "loaderPanel-out", "userPanel"].forEach(p => {
+                document.getElementById(p).classList.add("hidden");
+            });
+            // small delay so hidden class settles first
+            setTimeout(() => {
+                document.getElementById(id).classList.remove("hidden");
+            }, 50);
+        }
+
+        // ── Google Sign In ──
+        document.getElementById("googleBtn").addEventListener("click", async () => {
+            showPanel("loaderPanel");
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    uid: user.uid,
+                    email: user.email,
+                    login_time: new Date().toISOString()
+                });
+
+                document.getElementById("userPhoto").src = user.photoURL;
+                document.getElementById("userName").textContent = user.displayName;
+                document.getElementById("userEmail").textContent = user.email;
+
+                showPanel("userPanel");
+
+            } catch (err) {
+                console.error(err);
+                showPanel("loginPanel");
+            }
+        });
+
+        // ── Sign Out ──
+        document.getElementById("signOutBtn").addEventListener("click", async () => {
+            showPanel("loaderPanel-out");
+            await new Promise(r => setTimeout(r, 1200));
+            await signOut(auth);
+            showPanel("loginPanel");
+        });
+    </script>
+</body>
+
+</html>
