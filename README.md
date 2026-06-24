@@ -61,3 +61,6 @@ familylog-firebase-auth/
 ├── .firebaserc       # Firebase project reference
 └── screenshots/      # Submission screenshots
 ```
+---
+
+*Submitted by **Syed Muhammad Haider Naqvi** | WiseGem AI Internship — Week 1*
